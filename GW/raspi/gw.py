@@ -66,6 +66,12 @@ TELEGRAM_VERBOSE = False
 UPLOAD_GSHEETS = False
 NON_STOP_INTERNET_CONN_TRY = False
 
+# Credentials
+import creds
+idMati = creds.TELEGRAM_ADMIN_ID
+botKey = creds.TELEGRAM_BOT_KEY
+
+
 # OS
 import os
 
@@ -102,8 +108,7 @@ from oauth2client.client import SignedJwtAssertionCredentials
 # Telegram Bot
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-idMati = '86430579'
-updater = Updater("443792562:AAEKr2D0dl_nhWl2s5z10YT4hNcD1XPSPm4")
+updater = Updater()
 
 from functools import wraps
 
@@ -323,7 +328,7 @@ def main():
         print 'Initializing Google Sheets...',
         logger.info('Initializing Google Sheets...')
 
-        json_key = json.load(open('creds.json'))
+        json_key = json.load(open('creds.py.json'))
         scope = ['https://spreadsheets.google.com/feeds']
 
         credentials = SignedJwtAssertionCredentials(json_key['client_email'], json_key['private_key'].encode(), scope)
