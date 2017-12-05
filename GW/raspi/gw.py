@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 ## Installation
 #
 #    Needed:
@@ -45,6 +47,11 @@
 #
 #    Hello.gif : https://media.giphy.com/media/dzaUX7CAG0Ihi/giphy.gif
 #
+#    Serial: https://oscarliang.com/raspberry-pi-and-arduino-connected-serial-gpio/
+#
+#    Run script as service: http://www.diegoacuna.me/how-to-run-a-script-as-a-service-in-raspberry-pi-raspbian-jessie/
+#    Service problem import: https://stackoverflow.com/questions/35641414/python-import-of-local-module-failing-when-run-as-systemd-systemctl-service#39987693
+#
 #
 ## TODO's
 #   - Hay que ver a futuro como se podra actualizar este codigo desde Santiago remotamete a Llanquihue
@@ -74,6 +81,7 @@ botKey = creds.TELEGRAM_BOT_KEY
 
 # OS
 import os
+import sys
 
 # Data & Time, & time
 import datetime
@@ -108,7 +116,7 @@ from oauth2client.client import SignedJwtAssertionCredentials
 # Telegram Bot
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-updater = Updater()
+updater = Updater(botKey)
 
 from functools import wraps
 
@@ -117,7 +125,7 @@ LIST_OF_ADMINS = [int(idMati)]
 # Serial
 import serial
 if RASPI:
-    ser = serial.Serial('/dev/serial0', 9600)
+    ser = serial.Serial('/dev/ttyAMA0', 9600)
 
 # Logging
 import traceback
@@ -157,15 +165,16 @@ def stop(bot, update):
     update.message.reply_text('Stopping bot!')
     updater.stop()
     print 'Telegram Bot stopped!! (by user ' + update.message.from_user.first_name + ')'
+    sys.exit()
 
 def mod(bot, update):
     try:
         lora_mod = max(0, min(int(update.message.text[5:]), 10))
         command =  "config-mod+{}+".format(lora_mod)
-        update.message.reply_text(command)
-        logger.info('telegram: /mod {}'.format(lora_mod))
         if RASPI:
             ser.write(command)
+        update.message.reply_text(command)
+        logger.info('telegram: /mod {}'.format(lora_mod))
     except:
         print 'Error: Invalid /mod command'
         logger.info('Error: Invalid /mod command')
@@ -197,7 +206,7 @@ def newTest(bot, update):
 
 def getDataFile(bot, update):
     logger.info('telegram: /getDataFile')
-    bot.sendDocument(chat_id=idMati, document=open('data_gw.txt', 'rb'))
+    bot.sendDocument(chat_id=idMati, document=open('/home/pi/data_gw.txt', 'rb'))
     logger.info('OK, data_gw.txt fetched')
 
 def uploadGSheets(bot, update):
@@ -324,24 +333,25 @@ def help_message():
 def main():
     ### 1. Setup & initialize
     ## Google Sheet
-    if UPLOAD_GSHEETS:
-        print 'Initializing Google Sheets...',
-        logger.info('Initializing Google Sheets...')
+    # if UPLOAD_GSHEETS:
+    #     print 'Initializing Google Sheets...',
+    #     logger.info('Initializing Google Sheets...')
+    #
+    #     json_key = json.load(open('creds.py.json'))
+    #     scope = ['https://spreadsheets.google.com/feeds']
+    #
+    #     credentials = SignedJwtAssertionCredentials(json_key['client_email'], json_key['private_key'].encode(), scope)
+    #
+    #     file = gspread.authorize(credentials)
+    #     client = file.open("Datos Monitoreo Humedales Llanquihue")
+    #     sheet = client.worksheet("prueba")
+    #
+    #     print ' Ready!'
+    #     logger.info(' Ready!')
 
-        json_key = json.load(open('creds.py.json'))
-        scope = ['https://spreadsheets.google.com/feeds']
-
-        credentials = SignedJwtAssertionCredentials(json_key['client_email'], json_key['private_key'].encode(), scope)
-
-        file = gspread.authorize(credentials)
-        client = file.open("Datos Monitoreo Humedales Llanquihue")
-        sheet = client.worksheet("prueba")
-
-        print ' Ready!'
-        logger.info(' Ready!')
+    #time.sleep(10)
 
     ## Telegram Bot
-    print 'Initializing Telegram Bot...',
     logger.info('Initializing Telegram Bot...')
 
     bot = updater.bot
@@ -363,7 +373,7 @@ def main():
     updater.start_polling()
     # updater.idle()
 
-    bot.sendDocument(chat_id=idMati, document=open('hello.gif', 'rb'))
+    bot.send_photo(chat_id=idMati, photo=open('/home/pi/hello.png', 'rb'))
     bot.send_message(chat_id=idMati, text=str(datetime.datetime.now()))
     bot.send_message(chat_id=idMati, text=help_message())
 
@@ -413,24 +423,24 @@ def main():
 
                     ## 3. Upload data to spreadsheet
                     data = get_json(response_list)
-                    if UPLOAD_GSHEETS:
-                        r = sheet.row_count
-
-                        logger.info('updating row ' + str(r) + ' <- ' + str(data))
-
-                        try:
-                            sheet.insert_row(get_list(data), index=r)
-                        except:
-                            for shot in range(3):
-                                try:
-                                    bot.send_message(chat_id=idMati, text='Error, reattempting to upload data to spreadsheet in 20 seconds')
-                                    time.sleep(20)
-
-                                    bot.send_message(chat_id=idMati, text='Attempt #' + str(shot+1))
-                                    sheet.insert_row(get_list(data), index=r)
-                                    break
-                                except:
-                                    pass
+                    # if UPLOAD_GSHEETS:
+                    #     r = sheet.row_count
+                    #
+                    #     logger.info('updating row ' + str(r) + ' <- ' + str(data))
+                    #
+                    #     try:
+                    #         sheet.insert_row(get_list(data), index=r)
+                    #     except:
+                    #         for shot in range(3):
+                    #             try:
+                    #                 bot.send_message(chat_id=idMati, text='Error, reattempting to upload data to spreadsheet in 20 seconds')
+                    #                 time.sleep(20)
+                    #
+                    #                 bot.send_message(chat_id=idMati, text='Attempt #' + str(shot+1))
+                    #                 sheet.insert_row(get_list(data), index=r)
+                    #                 break
+                    #             except:
+                    #                 pass
 
                     ## 4. telegram
                     if TELEGRAM_VERBOSE:

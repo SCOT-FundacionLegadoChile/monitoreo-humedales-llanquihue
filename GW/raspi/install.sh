@@ -22,7 +22,28 @@
 # 7. Download 'firmware' files
     wget https://media.giphy.com/media/dzaUX7CAG0Ihi/giphy.gif
     mv giphy.gif hello.gif
+   #**/gw.py
+    mkdir logs
+   #**/creds.py
+   #**/creds.py.json
+# 8. Install python libraries
+    sudo pip uninstall oauth2client
+    sudo pip install oauth2client==1.5.2
+    sudo pip install PyOpenSSL # -> ERROR
+    pip install gspread
 
+    pip install python-telegram-bot --upgrade
+
+    pip install pyserial --upgrade
+
+    pip install logging
+
+# 9. Configuring serial
+#     Search file /boot/cmdline.txt and find the line and remove it
+#         console=ttyAMA0,115200 kgdboc=ttyAMA0,115200
+#     Install minicom
+    sudo apt-get install minicom
+#     Sometimes serial port works with /dev/serial0 or /dev/ttyAMA0
 
 #
 
