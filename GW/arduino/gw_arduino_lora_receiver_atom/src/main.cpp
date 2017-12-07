@@ -13,7 +13,7 @@
 *  and uploading it to the cloud, plus other services. And (2) an
 *  arduino serving as lora receiver and passing comunication data to
 *  the raspi.
-*  
+*
 *  Conexiones ------------------
 *                               |
 *                               v
@@ -39,6 +39,8 @@
 *    config-tx-power     configure tx power       Tx Power          config-tx-power+13+
 *
 *****************************************************************/
+// For PlatformIO
+#include <Arduino.h>
 
 // SX1276 libraries
 #include <SPI.h>
@@ -160,7 +162,7 @@ void configureLoraParams(String bandWidth, String codingRate, String spreadingFa
   if (!invalid) {
     uint8_t register_1D = bw | cr;
     uint8_t register_1E = sf;
-    
+
     rf95.configureLoraRegs(register_1D, register_1E);
   } else {
     Serial.print(INFO_TAG);
@@ -179,7 +181,7 @@ void sendLoraPacket(String msg) {
   rf95.send((uint8_t *)payload, len);
   delay(10);
   rf95.waitPacketSent();
-  
+
   unsigned long time2 = micros();
   lastPacketSentDuration = time2 - time1;
 }
@@ -194,7 +196,7 @@ void executeCommand(String command) {
   else if (command == "config-params") {n_command = 6;}
   else if (command == "sleep")         {n_command = 7;}
   else if (command == "config-tx-pow") {n_command = 8;}
-  
+
   switch(n_command) {
     case 1: // at
     {
@@ -269,12 +271,12 @@ void executeCommand(String command) {
       break;
     }
   }
-  
+
   // flush serial buffer
   while(Serial.available()) {
     Serial.read();
   }
-  
+
   newCmd = false;
   cmd = "";
 }
@@ -282,7 +284,7 @@ void executeCommand(String command) {
 void printPreviousPacketsNotReceived(uint32_t n) {
   // Print previous packets not received
   if (lastPacketNumber != 0) {
-    for (int i=lastPacketNumber+1; i<n; i++) {
+    for (uint32_t i=lastPacketNumber+1; i<n; i++) {
       Serial.print(LORA_TAG);
       Serial.print(""); Serial.print("\tRx\t"); Serial.println(i);
     }
@@ -301,7 +303,7 @@ void loop() {
     if (rf95.recv(buf, &len)) {
       // Check & Print packets not received
       uint8_t c;
-      for(int i=0; i<sizeof(buf); i++) {
+      for(uint32_t i=0; i<sizeof(buf); i++) {
         if ((c = buf[i]) == '\t')
           break;
         packetNumber = packetNumber * 10 + (c-48);
@@ -312,21 +314,21 @@ void loop() {
       }
       lastPacketNumber = packetNumber;
       packetNumber = 0;
-      
+
       lastRSSI = rf95.lastRssi();
       Serial.print(LORA_TAG);
       Serial.print(
-        String(millis()) + "\t" + 
+        String(millis()) + "\t" +
         "Rx" + "\t" +
         String(lastPacketNumber) + "\t" +
-        "payload" + "\t" + 
-        "<" + "\t" + 
-        String((char*) buf) + "\t" + 
-        ">" + "\t" + 
-        "rssi" + "\t" + 
+        "payload" + "\t" +
+        "<" + "\t" +
+        String((char*) buf) + "\t" +
+        ">" + "\t" +
+        "rssi" + "\t" +
         String(lastRSSI) + "\n"
       );
-      
+
       // Send a reply
       //  uint8_t data[] = "And hello back to you";
       //  rf95.send(data, sizeof(data));

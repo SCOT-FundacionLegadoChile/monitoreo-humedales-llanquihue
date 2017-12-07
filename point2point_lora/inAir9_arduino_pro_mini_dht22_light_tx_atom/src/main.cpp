@@ -24,6 +24,8 @@
 //                 3V3----------photo-resistor (3.3V in)
 //             pin A2-----------resistor + photo-resistor (data out)
 //
+// For PlatformIO
+#include <Arduino.h>
 
 const bool VERBOSE = true;
 
@@ -81,6 +83,8 @@ String cmd;
 
 bool transmit = true;
 
+void onClick();
+
 void setup() {
   Serial.begin(115200);
 
@@ -88,11 +92,11 @@ void setup() {
   digitalWrite(LED_PIN, virtual_channel_jamming_off);
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   attachInterrupt(1, onClick, FALLING);
-  
+
   pinMode(LIGHT_PIN, INPUT);
   pinMode(DHT_PIN, INPUT);
   dht.begin();
-  
+
   pinMode(RFM95_RST, OUTPUT);
   digitalWrite(RFM95_RST, HIGH);
 
@@ -121,7 +125,7 @@ void setup() {
   verbosePrintln("LoRa is ready!");
   verbosePrintln("Freq: " + String(RF95_FREQ) + "MHz");
   verbosePrintln("Tx Pow:" + String(10) + "dBm");
-  
+
   verbosePrintln("Begining Tx...\n");
 }
 
@@ -135,7 +139,7 @@ void onClick() {
     virtual_channel_jamming_off = !virtual_channel_jamming_off;
     digitalWrite(LED_PIN, virtual_channel_jamming_off);
   }
-  
+
   lastDebounceTime = millis();
 }
 
@@ -153,7 +157,7 @@ void executeCommand(String command) {
 
       if (boost.toInt() == 1) rf95.setTxPower(power.toInt());
       else                    rf95.setTxPower(power.toInt(),true); // 2nd arg 'useRFO'
-      
+
       switch(mod.toInt()){
         case 0: { rf95.setModemConfig(RH_RF95::mod0); break;}
         case 1: { rf95.setModemConfig(RH_RF95::mod1); break;}
@@ -171,12 +175,12 @@ void executeCommand(String command) {
       String bost;
       if (boost.toInt() == 1) bost = "boost";
       else                    bost = "rf0";
-      
+
       verbosePrintln("OK, lora -> " + bost + ", " + power + "dBm, mod" + mod);
 
       transmit = true;
       verbosePrintln("Transmiting...");
-      
+
       break;
     }
     case 2: // stop
@@ -196,7 +200,7 @@ void executeCommand(String command) {
   while(Serial.available()) {
     Serial.read();
   }
-  
+
   newCmd = false;
   cmd = "";
 }
@@ -210,30 +214,30 @@ void loop() {
     light = analogRead(LIGHT_PIN);
     hum = dht.readHumidity();
     temp = dht.readTemperature();
-    
+
     //msg.concat(String(n));
-    aux = String(n) + tab + 
-          String(light) + tab + 
-          String(hum) + tab + 
-          String(temp) + tab + 
+    aux = String(n) + tab +
+          String(light) + tab +
+          String(hum) + tab +
+          String(temp) + tab +
           msg;
     uint8_t len = aux.length() + 1;
     char payload[len];
     aux.toCharArray(payload, len);
     n++;
-    
+
     verbosePrint(String(millis()) + "\tTx, payload: <\t" + String(payload));
     time1 = micros();
-  
+
     if (virtual_channel_jamming_off) {
       rf95.send((uint8_t *)payload, len);
       delay(10);
       rf95.waitPacketSent();
-      
+
       Serial.print(payload);
       Serial.write(10);
     }
-    
+
     time2 = micros();
     verbosePrint("\t>, tx time:\t" + String(time2 - time1) + "\tus");
     delay(10000);
