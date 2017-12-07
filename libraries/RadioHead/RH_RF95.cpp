@@ -19,17 +19,17 @@ PROGMEM static const RH_RF95::ModemConfig MODEM_CONFIG_TABLE[] =
     { 0x72,   0x74,    0x00}, // Bw125Cr45Sf128 (the chip default)
     { 0x92,   0x74,    0x00}, // Bw500Cr45Sf128
     { 0x48,   0x94,    0x00}, // Bw31_25Cr48Sf512
-    { 0x02,   0xC4,    0x00}, // mod0 (custom)
-    { 0x72,   0xC4,    0x00}, // mod1 (custom)
-    { 0x82,   0xC4,    0x00}, // mod2 (custom)
-    { 0x72,   0xA4,    0x00}, // mod3 (custom)
-    { 0x92,   0xC4,    0x00}, // mod4 (custom)
-    { 0x82,   0xA4,    0x00}, // mod5 (custom)
-    { 0x92,   0xB4,    0x00}, // mod6 (custom)
-    { 0x82,   0x94,    0x00}, // mod7 (custom)
-    { 0x92,   0x94,    0x00}, // mod8 (custom)
-    { 0x92,   0x84,    0x00}, // mod9 (custom)
-    { 0x92,   0x74,    0x00}, // mod10 (custom)
+    { 0x02,   0xC4,    0x00}, // mod0 (custom)      //SF12
+    { 0x72,   0xC4,    0x00}, // mod1 (custom)      //SF12
+    { 0x82,   0xC4,    0x00}, // mod2 (custom)      //
+    { 0x72,   0xA4,    0x00}, // mod3 (custom)      //
+    { 0x92,   0xC4,    0x00}, // mod4 (custom)      //
+    { 0x82,   0xA4,    0x00}, // mod5 (custom)      //
+    { 0x92,   0xB4,    0x00}, // mod6 (custom)      //
+    { 0x82,   0x94,    0x00}, // mod7 (custom)      //
+    { 0x92,   0x94,    0x00}, // mod8 (custom)      //
+    { 0x92,   0x84,    0x00}, // mod9 (custom)      //
+    { 0x92,   0x74,    0x00}, // mod10 (custom)     //
 
     
     
@@ -376,10 +376,16 @@ void RH_RF95::setTxPower(int8_t power, bool useRFO)
     }
 }
 
+// CUSTOM
+void RH_RF95::configureLoraRegs(uint8_t register1D, uint8_t register1E) {
+    spiWrite(RH_RF95_REG_1D_MODEM_CONFIG1, register1D);
+    spiWrite(RH_RF95_REG_1E_MODEM_CONFIG2, register1E);
+}
+
 // Sets registers from a canned modem configuration structure
 void RH_RF95::setModemRegisters(const ModemConfig* config)
 {
-    spiWrite(RH_RF95_REG_1D_MODEM_CONFIG1,       config->reg_1d);
+    spiWrite(RH_RF95_REG_1D_MODEM_CONFIG1,       config->reg_1d); //el comando 'config->reg_1d' extrae el reg 1d del struct config
     spiWrite(RH_RF95_REG_1E_MODEM_CONFIG2,       config->reg_1e);
     spiWrite(RH_RF95_REG_26_MODEM_CONFIG3,       config->reg_26);
 }

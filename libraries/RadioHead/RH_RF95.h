@@ -589,6 +589,8 @@ public:
     /// \param[in] index The configuration choice.
     /// \return true if index is a valid choice.
     bool        setModemConfig(ModemConfigChoice index);
+    
+    void           configureLoraRegs(uint8_t register1D, uint8_t register1E);
 
     /// Tests whether a new message is available
     /// from the Driver. 
