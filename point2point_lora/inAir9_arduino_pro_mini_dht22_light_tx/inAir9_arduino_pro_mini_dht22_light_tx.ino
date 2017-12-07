@@ -25,7 +25,7 @@
 //             pin A2-----------resistor + photo-resistor (data out)
 //
 
-const bool VERBOSE = false;
+const bool VERBOSE = true;
 
 void verbosePrint(String msgOut) {
   if (VERBOSE)
@@ -79,7 +79,7 @@ String tab = String("\t");
 bool newCmd = false;
 String cmd;
 
-bool transmit = false;
+bool transmit = true;
 
 void setup() {
   Serial.begin(115200);
@@ -110,8 +110,8 @@ void setup() {
 
   if (error == "ok" && !rf95.init())                        error = "LoRa radio initialization failed";
   if (error == "ok" && !rf95.setFrequency(RF95_FREQ))       error = "Frequency configuration failed";
-  if (error == "ok" && !rf95.setModemConfig(RH_RF95::mod9)) error = "LoRa mod configuration error";
-  rf95.setTxPower(10,true);
+  if (error == "ok" && !rf95.setModemConfig(RH_RF95::mod10)) error = "LoRa mod configuration error";
+  rf95.setTxPower(1,true);
 
   if (error != "ok") {
     verbosePrintln("Error: " + error);

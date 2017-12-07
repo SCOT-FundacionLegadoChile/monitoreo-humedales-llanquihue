@@ -1,0 +1,20 @@
+Pruebas Llanquihue 30 Noviembre 2017
+
+Señal en puntos especiales:
+       RSSI   PER
+    -81 dBm , 1    Árboles atrás de cabañas
+    -92 dBm , 1    Orilla El Loto
+    -83 dBm , 0.72 Plaza Orilla Este El Loto
+    -81 dBm , 0.66 Dentro Hotel Werner
+    -85 dBm , 1.   Orilla Hotel Werner
+    -94 dBm , 0.52 Piso Inicio Estero Helechos
+    -96 dBm , 0.55 Piso+ Inicio Estero Helechos
+    -97 dBm , 0.92 Suelo estero atrás de Helechos
+    -99 dBm , 1.   Suelo estero previo a Las Ranas
+    -99 dBm , 0.51 Suelo cercano Totem Las Ranas
+    -98 dBm , 1    Cartel de aves
+    -99 dBm , 0.61 Suelo Las Ranas, pasado la zanja
+    xxx dBm , 0    Suelo atrás montículo Las Ranas
+    -99 dBm , 0.72 Suelo Orilla del Maullín, Las Ranas
+
+    

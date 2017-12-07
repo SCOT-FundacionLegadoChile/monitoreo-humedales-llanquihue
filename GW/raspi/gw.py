@@ -125,7 +125,7 @@ LIST_OF_ADMINS = [int(idMati)]
 # Serial
 import serial
 if RASPI:
-    ser = serial.Serial('/dev/ttyAMA0', 9600)
+    ser = serial.Serial('/dev/serial0', 9600)
 
 # Logging
 import traceback
@@ -199,8 +199,8 @@ def verbose(bot, update):
 
 def newTest(bot, update):
     logger.info('telegram: /newTest')
-    os.system('sudo rm data_gw.txt')
-    os.system("echo 'Date\tTime\tuC Clock [ms]\tPacket Number\tPayload\tRSSI [dBm]\tLight [rel]\tHumidity [%]\tTemperature [C]' > data_gw.txt")
+    os.system('sudo rm /home/pi/data_gw.txt')
+    os.system("echo 'Date\tTime\tuC Clock [ms]\tPacket Number\tPayload\tRSSI [dBm]\tLight [rel]\tHumidity [%]\tTemperature [C]' > /home/pi/data_gw.txt")
     update.message.reply_text("Ready, 'data_gw.txt' file is clean")
     logger.info("Ready, 'data_gw.txt' file is clean")
 
@@ -389,40 +389,35 @@ def main():
         while 1:
             if RASPI:
                 ## 1. Read packet
-                raw_response = ser.readline() #.rstrip()
+                arduino_msg = ser.readline() #.rstrip()
 
-                #Check if LoRa packet or Arduino info
-                tag = raw_response[:4]
-                msg = raw_response[5:]
-                #print "tag: " + tag
-                #print "msg: " + msg
-
-                #logger.info('msg: ' + msg[:-1])
+                # Messages from arduino are formatted as '[tag][msg]'.
+                # tag indicates if it's an arduino info message or a lora packet
+                tag = arduino_msg[:4]
+                msg = arduino_msg[5:]
 
                 if tag == "info":
                     info = msg
-                    print info
                     bot.send_message(chat_id=idMati, text=info)
                     logger.info('arduino: ' + info)
 
                 elif tag == "lora":
-                    #Delete tag from response
-                    raw_response = msg
-                    raw_response = raw_response[:-2] #viene con \r\n, hay que ver de donde
+                    lora_msg = msg
+                    lora_msg = lora_msg.split('\n')[0]
 
                     dt = datetime.datetime.now()
-                    raw_response = str(dt.date()) + '\t' + str(dt.time()) + '\t' + raw_response
+                    lora_msg = str(dt.date()) + '\t' + str(dt.time()) + '\t' + lora_msg
 
-                    response_list = raw_response.split("\t")
+                    lora_msg_list = lora_msg.split("\t")
 
                     ## 2. Save in local file
-                    clean_response = clean_response_list(response_list)
-                    with open('data_gw.txt', 'a') as file:
+                    clean_response = clean_response_list(lora_msg_list)
+                    with open('/home/pi/data_gw.txt', 'a') as file:
                         file.write(clean_response)
                         logger.info('writing packet in data file')
 
                     ## 3. Upload data to spreadsheet
-                    data = get_json(response_list)
+                    data = get_json(lora_msg_list)
                     # if UPLOAD_GSHEETS:
                     #     r = sheet.row_count
                     #
@@ -444,7 +439,7 @@ def main():
 
                     ## 4. telegram
                     if TELEGRAM_VERBOSE:
-                        bot.send_message(chat_id=idMati, text=telegram_respose(response_list))
+                        bot.send_message(chat_id=idMati, text=telegram_respose(lora_msg_list))
             else:
                 pass
     except Exception as e:
