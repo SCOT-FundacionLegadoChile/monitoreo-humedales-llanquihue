@@ -2,13 +2,18 @@
 *.idea*
 
 # Credential Files
+#   - telegram id/key's
+#   - google sheet key's
 *creds*
 
 # Raspbian images
 *.img
 
-# Open files
+# Open excel files
 *.~*
+
+# PlatformIO
+.travis.yml
 
 # Created by https://www.gitignore.io/api/pycharm
 
