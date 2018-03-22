@@ -48,53 +48,42 @@ void loop() {                   //the main loop.
     if (strcmp(computerdata, "sleep") != 0) {  //if the command that has been sent is NOT the sleep command, wait the correct amount of time and request data.
                                                //if it is the sleep command, we do nothing. Issuing a sleep command and then requesting data will wake the pH circuit.
 
-
-
-    delay(time_);                    //wait the correct amount of time for the circuit to complete its instruction.
-
-    Wire.requestFrom(address, 20, 1); //call the circuit and request 20 bytes (this may be more than we need)
-    code = Wire.read();             //the first byte is the response code, we read this separately.
-
-    switch (code) {                 //switch case based on what the response code is.
-      case 1:                       //decimal 1.
-        Serial.println("Success");  //means the command was successful.
-        break;                        //exits the switch case.
-
-      case 2:                        //decimal 2.
-        Serial.println("Failed");    //means the command has failed.
-        break;                         //exits the switch case.
-
-      case 254:                      //decimal 254.
-        Serial.println("Pending");   //means the command has not yet been finished calculating.
-        break;                         //exits the switch case.
-
-      case 255:                      //decimal 255.
-        Serial.println("No Data");   //means there is no further data to send.
-        break;                       //exits the switch case.
-    }
-
-
-
-
-
-    while (Wire.available()) {         //are there bytes to receive.
-      in_char = Wire.read();           //receive a byte.
-      ph_data[i] = in_char;            //load this byte into our array.
-      i += 1;                          //incur the counter for the array element.
-      if (in_char == 0) {              //if we see that we have been sent a null command.
-        i = 0;                         //reset the counter i to 0.
-        Wire.endTransmission();        //end the I2C data transmission.
-        break;                         //exit the while loop.
+  
+  
+      delay(time_);                    //wait the correct amount of time for the circuit to complete its instruction.
+  
+      Wire.requestFrom(address, 20, 1); //call the circuit and request 20 bytes (this may be more than we need)
+      code = Wire.read();             //the first byte is the response code, we read this separately.
+  
+      switch (code) {
+        case 1:   Serial.println("Success");  break;  //means the command was successful.
+        case 2:   Serial.println("Failed");   break;  //means the command has failed.
+        case 254:   Serial.println("Pending");  break;  //means the command has not yet been finished calculating.
+        case 255:   Serial.println("No Data");  break;  //means there is no further data to send.
       }
+  
+  
+  
+  
+  
+      while (Wire.available()) {         //are there bytes to receive.
+        in_char = Wire.read();           //receive a byte.
+        ph_data[i] = in_char;            //load this byte into our array.
+        i += 1;                          //incur the counter for the array element.
+        if (in_char == 0) {              //if we see that we have been sent a null command.
+          i = 0;                         //reset the counter i to 0.
+          Wire.endTransmission();        //end the I2C data transmission.
+          break;                         //exit the while loop.
+   
+     }
+      }
+  
+      Serial.println(ph_data);          //print the data.
     }
-
-    Serial.println(ph_data);          //print the data.
   }
-}
   //Uncomment this section if you want to take the pH value and convert it into floating point number.
   //ph_float=atof(ph_data);
 }
-
 
 
 

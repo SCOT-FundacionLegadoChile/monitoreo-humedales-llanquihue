@@ -27,6 +27,7 @@
 // For PlatformIO
 #include <Arduino.h>
 
+bool transmit = false;
 const bool VERBOSE = false;
 
 void verbosePrint(String msgOut) {
@@ -39,7 +40,9 @@ void verbosePrintln(String msgOut) {
     Serial.println(msgOut);
 }
 
-/* sx1276*/
+/*
+ * sx1276
+ */
 #include <SPI.h>
 #include <RH_RF95.h>
 
@@ -50,12 +53,17 @@ void verbosePrintln(String msgOut) {
 
 RH_RF95 rf95(RFM95_CS, RFM95_INT);
 
-//char payload[23]="Decir adios es crecer ";
-String msg = "Lo que puede llegar a ocurrir en la crisis energetica galactica";
+//char payload[23] = "Decir adios es crecer ";
+//String msg = "Lo que puede llegar a ocurrir en la crisis energetica galactica";
+uint8_t node_id = 2;
+String msg = "que ocurre con las garzas";
 String aux;
 unsigned long n = 0;
 
-/* sensors */
+
+/*
+ * sensors
+ */
 #define BUTTON_PIN 3
 #define LED_PIN 7
 unsigned long lastDebounceTime = 0;
@@ -63,6 +71,7 @@ unsigned long debounceDelay = 100;
 
 bool virtual_channel_jamming_off = true;
 
+// DHT22 & Light
 #include "DHT.h"
 #define DHT_PIN 5     // what digital pin we're connected to
 #define DHT_TYPE DHT22   // DHT 22  (AM2302), AM2321
@@ -70,23 +79,30 @@ DHT dht(DHT_PIN, DHT_TYPE);
 
 #define LIGHT_PIN A2
 
-float hum, temp;
-int light;
+float hum, temp, light;
 
+// Temperatura
+#include "Wire.h"
+#define TMP102 72
+
+#include "Adafruit_BMP280.h"
+Adafruit_BMP280 bmp; // I2C
+
+// Time
 unsigned long time1;
 unsigned long time2;
+unsigned long total_time;
 String tab = String("\t");
 
 // Various vars
 bool newCmd = false;
 String cmd;
 
-bool transmit = true;
-
 void onClick();
 
 void setup() {
-    Serial.begin(115200);
+	Serial.begin(115200);
+	Wire.begin();
 
     pinMode(LED_PIN, OUTPUT);
     digitalWrite(LED_PIN, virtual_channel_jamming_off);
@@ -114,13 +130,13 @@ void setup() {
 
     if (error == "ok" && !rf95.init())                        error = "LoRa radio initialization failed";
     if (error == "ok" && !rf95.setFrequency(RF95_FREQ))       error = "Frequency configuration failed";
-    //if (error == "ok" && !rf95.setModemConfig(RH_RF95::mod10)) error = "LoRa mod configuration error";
-
 	// mod10 + CRC disable
-	uint8_t register_1D = 0b10010010; // Bw (7-4), CR (3-1), ImplicitHeaderModeOn (0)
-    uint8_t register_1E = 0b01110000; // SF (7-4), TxContinuousMode (3), RxPayloadCrcOn (2), SymbTimeout(1-0)
-    rf95.configureLoraRegs(register_1D, register_1E);
-    rf95.setTxPower(10,true);
+	//uint8_t register_1D = 0b10010010; // Bw (7-4), CR (3-1), ImplicitHeaderModeOn (0)
+    //uint8_t register_1E = 0b01110000; // SF (7-4), TxContinuousMode (3), RxPayloadCrcOn (2), SymbTimeout(1-0)
+    //rf95.configureLoraRegs(register_1D, register_1E);
+    if (error == "ok" && !rf95.setModemConfig(RH_RF95::mod10)) error = "LoRa mod configuration error";
+
+    rf95.setTxPower(5,true);
 
     if (error != "ok") {
         verbosePrintln("Error: " + error);
@@ -130,6 +146,13 @@ void setup() {
     verbosePrintln("LoRa is ready!");
     verbosePrintln("Freq: " + String(RF95_FREQ) + "MHz");
     verbosePrintln("Tx Pow:" + String(10) + "dBm");
+
+
+	//if (!bmp.begin()) {
+	//    Serial.println(F("Could not find a valid BMP280 sensor, check wiring!"));
+	//    while (1);
+	//}
+
 
     verbosePrintln("Begining Tx...\n");
 }
@@ -209,29 +232,61 @@ void executeCommand(String command) {
 	cmd = "";
 }
 
+float getTemp102(){
+  byte firstbyte, secondbyte; //these are the bytes we read from the TMP102 temperature registers
+  int val;
+  float convertedtemp;
+
+  Wire.beginTransmission(TMP102); //Say hi to the sensor.
+  Wire.write(0x00);
+  Wire.endTransmission();
+  Wire.requestFrom(TMP102, 2);
+  Wire.endTransmission();
+
+
+  firstbyte      = (Wire.read());
+  secondbyte     = (Wire.read());
+
+  val = ((firstbyte) << 4);
+  val |= (secondbyte >> 4);
+  convertedtemp = val*0.0625;
+
+  return convertedtemp;
+}
+
 void loop() {
 	if (newCmd) {
 		executeCommand(cmd);
 	}
 
 	if (transmit) {
-		light = analogRead(LIGHT_PIN);
-		hum = dht.readHumidity();
-		temp = dht.readTemperature();
+		//light = analogRead(LIGHT_PIN);
+		//hum = dht.readHumidity();
+		//temp = dht.readTemperature();
+
+		temp = getTemp102();
+
+		hum = random(100);//bmp.readTemperature(); //*C
+    	light = 22;//random(100);//bmp.readPressure(); // Pa
+		//bmp.readAltitude(1013.25);
 
 		//msg.concat(String(n));
 		aux = String(n) + tab +
-			  String(light) + tab +
-			  String(hum) + tab +
-			  String(temp) + tab +
-			  msg;
+          String(light) + tab +
+          String(hum) + tab +
+          String(temp) + tab +
+          msg;
+	  	//aux = aux + tab + aux;
+
 		uint8_t len = aux.length() + 1;
 		char payload[len];
 		aux.toCharArray(payload, len);
 		n++;
 
-		verbosePrint(String(millis()) + "\tTx, payload: <\t" + String(payload));
-		time1 = micros();
+		send_packet:
+
+		verbosePrint(String(millis()) + "\tTx, payload: <\t");// + String(payload));
+		time1 = millis();
 
 		if (virtual_channel_jamming_off) {
 			rf95.send((uint8_t *)payload, len);
@@ -239,11 +294,42 @@ void loop() {
 			rf95.waitPacketSent();
 
 			Serial.print(payload);
-			Serial.write(10);
 		}
 
-		time2 = micros();
-		verbosePrint("\t>, tx time:\t" + String(time2 - time1) + "\tus");
-		delay(10000);
+		//time2 = millis();
+		total_time = millis() - time1;
+		verbosePrint("\t>, tx time:\t" + String(total_time) + "\tms");
+		Serial.write(10);
+		delay(5000);
+
+		// wait for response
+		/*delay(10);
+
+		tic = micros();
+		boolean acked = false;
+		do {
+			if (rf95.available() {
+				// Should be a reply message for us now
+				if (rf95.recv(buf, &len)) {
+					// Serial.print("Got reply: ");
+					// Serial.println((char*)buf);
+					// Serial.print("RSSI: ");
+					// Serial.println(rf95.lastRssi(), DEC);
+
+					uint8_t l = sizeof(buf);
+					uint8_t lls = 0;
+					for(uint32_t i=0; i<l; i++) {
+						if (buf[i] == node_id)
+							lls++;
+					}
+
+					if (lls > (l/2)) {
+						acked = true;
+					}
+				}
+			}
+			delay(10);
+		} while(micros()-tic < total_time + 2000);
+		*/
 	}
 }
