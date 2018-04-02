@@ -37,7 +37,11 @@ DHT dht(DHT_PIN, DHT_TYPE);
 
 RH_RF95 rf95(RFM95_CS, RFM95_INT);
 
-#include "LowPower.h"
+/* SoftwareSerial */
+#include <SoftwareSerial.h>
+#define rx 4
+#define tx 3
+SoftwareSerial SSerial(rx, tx);
 
 #include <Vcc.h>
 Vcc vcc(1.0);
@@ -56,7 +60,8 @@ String message;
 String tab = String("\t");
 
 void setup() {
-  Serial.begin(9600);
+  //Serial.begin(9600);
+  SSerial.begin(9600);
 
   sensorstring.reserve(30);
 
@@ -80,7 +85,7 @@ void setup() {
   }
 
   delay(5000);
-  Serial.print("Status\r");
+  SSerial.print("Status\r");
   delay(2000);
 }
 
@@ -113,7 +118,7 @@ boolean isNumeric(String str) {
 void loop() {
   sensorvalue = "no_value";
   message = "no_msg";
-  Serial.print("R\r");            // *value *OK
+  SSerial.print("R\r");            // *value *OK
   
   hum = dht.readHumidity();
   temp = dht.readTemperature();
@@ -121,8 +126,9 @@ void loop() {
 
   delay(1000); // 800 + 200 ms
 
-  while(Serial.available()) {
-    sensorstring = Serial.readStringUntil(13);
+  while(SSerial.available()) {
+    sensorstring = SSerial.readStringUntil(13);
+    
     if (isNumeric(sensorstring)) {
       sensorvalue = sensorstring;
     } else {
@@ -134,8 +140,8 @@ void loop() {
         node_id       + tab + 
         String(hum)   + tab + 
         String(temp)  + tab + 
-        sensorvalue  + tab + 
-        String(vin)     + tab + 
+        sensorvalue   + tab + 
+        String(vin)   + tab + 
         message;
 
   uint8_t len = aux.length() + 1;
@@ -147,12 +153,12 @@ void loop() {
   delay(10);
   rf95.waitPacketSent();
 
-  Serial.print("Sleep\r");  // *SL
+  SSerial.print("Sleep\r");  // *SL
   rf95.sleep();
 
   delay(1200000);
   
-  Serial.print(".\r"); delay(50); // *WA
-  Serial.print("Status\r");
+  SSerial.print(".\r"); delay(50); // *WA
+  SSerial.print("Status\r");
 }
 
