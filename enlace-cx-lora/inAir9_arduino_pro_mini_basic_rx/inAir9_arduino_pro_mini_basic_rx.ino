@@ -51,7 +51,7 @@ void setup() {
   Serial.print("inAir9 freq: "); Serial.println(RF95_FREQ);
 
   // Configuring LoRa <B,SF,CR>
-  if (!rf95.setModemConfig(RH_RF95::mod10)) {
+  if (!rf95.setModemConfig(RH_RF95::mod2)) {
     Serial.println("Error: inAir9 LoRa params configuration error");
     while(1);
   }
@@ -70,8 +70,8 @@ void loop() {
     if (rf95.recv(buf, &len)) {
       //RH_RF95::printBuffer("Received: ", buf, len);
       
-      Serial.print(", payload: "); Serial.print((char*)buf);
-      Serial.print(", rssi: "); Serial.println(rf95.lastRssi(), DEC);
+      Serial.print(", payload:  ["); Serial.print((char*)buf);
+      Serial.print("  ], rssi: "); Serial.println(rf95.lastRssi(), DEC);
       
       // Send a reply
       //  uint8_t data[] = "And hello back to you";

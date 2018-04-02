@@ -110,8 +110,8 @@ void setup() {
 
   if (error == "ok" && !rf95.init())                        error = "LoRa radio initialization failed";
   if (error == "ok" && !rf95.setFrequency(RF95_FREQ))       error = "Frequency configuration failed";
-  if (error == "ok" && !rf95.setModemConfig(RH_RF95::mod10)) error = "LoRa mod configuration error";
-  rf95.setTxPower(1,true);
+  if (error == "ok" && !rf95.setModemConfig(RH_RF95::mod2)) error = "LoRa mod configuration error";
+  rf95.setTxPower(14,true);
 
   if (error != "ok") {
     verbosePrintln("Error: " + error);
@@ -230,12 +230,12 @@ void loop() {
       delay(10);
       rf95.waitPacketSent();
       
-      Serial.print(payload);
-      Serial.write(10);
+      //Serial.print(payload);
+      //Serial.write(10);
     }
     
     time2 = micros();
-    verbosePrint("\t>, tx time:\t" + String(time2 - time1) + "\tus");
-    delay(10000);
+    verbosePrint("\t>, tx time:\t" + String(time2 - time1) + "\tus\n");
+    delay(5000);
   }
 }

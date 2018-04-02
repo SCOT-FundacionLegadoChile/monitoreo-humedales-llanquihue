@@ -1,15 +1,15 @@
 // 
 //
 //////////////////////////////////////////
-// String node_id = "las_ranas_maullin"
-// String node_id = "las_ranas_mirador"
-// String node_id = "las_ranas_1"
-// String node_id = "los_helechos_1"
-// String node_id = "el_loto_plaza"
-String node_id = "el_loto_werner"
-// String node_id = "el_loto_isla"
-// String node_id = "baquedano_pasarela"
-// String node_id = "sarao_1"
+// String node_id = "las_ranas_maullin";
+// String node_id = "las_ranas_mirador";
+// String node_id = "las_ranas_1";
+// String node_id = "los_helechos_1";
+// String node_id = "el_loto_plaza";
+String node_id = "el_loto_werner";
+// String node_id = "el_loto_isla";
+// String node_id = "baquedano_pasarela";
+// String node_id = "sarao_1";
 //////////////////////////////////////////
 
 String inputstring = "";
@@ -20,10 +20,10 @@ float temperature;
 float hum;
 float temp;
 
-#include <SoftwareSerial.h>
-#define rx 3
-#define tx 4
-SoftwareSerial myserial(rx, tx);
+//#include <SoftwareSerial.h>
+//#define rx 3
+//#define tx 4
+//SoftwareSerial myserial(rx, tx);
 
 #include "DHT.h"
 #define DHT_PIN 5
@@ -57,7 +57,7 @@ float v;
 void setup() {
 	Serial.begin(9600);
 
-  myserial.begin(9600);
+  //myserial.begin(9600);
   inputstring.reserve(10);
   sensorstring.reserve(30);
 
@@ -82,21 +82,15 @@ void setup() {
   rf95.setTxPower(13,true);
 
   if (error != "ok") {
-    Serial.println("Error: " + error);
+  //  Serial.println("Error: " + error);
     while(1);
   }
-
-  Serial.println("LoRa is ready!");
-  Serial.println("Freq: " + String(RF95_FREQ) + "MHz");
-  Serial.println("Tx Pow:" + String(10) + "dBm");
-  
-  Serial.println("Begining Tx...\n");
 }
 
-//void serialEvent() {
-//  inputstring = Serial.readStringUntil(13);
-//  input_string_complete = true;
-//}
+void serialEvent() {
+  sensorstring = Serial.readStringUntil(13);
+  sensor_string_complete = true;
+}
 
 void loop() {
   //if (input_string_complete) {
@@ -106,18 +100,16 @@ void loop() {
   //  input_string_complete = false;
   //}
 
-  if (myserial.available() > 0) {
-    char inchar = (char) myserial.read();
-    if (inchar == '\r') {
-      sensor_string_complete = true;
-    } else {
-      sensorstring += inchar;
-    }
-  }
+  //if (Serial.available() > 0) {
+  //  char inchar = (char) Serial.read();
+  //  if (inchar == '\r') {
+  //    sensor_string_complete = true;
+  //  } else {
+  //    sensorstring += inchar;
+  //  }
+  //}
 
   if (sensor_string_complete == true) {
-    sensorstring = "";
-    sensor_string_complete = false;
 
     hum = dht.readHumidity();
     temp = dht.readTemperature();
@@ -130,28 +122,31 @@ void loop() {
           String(sensorstring) + tab + 
           String(v) + tab + 
           node_id;
-    
+
     uint8_t len = aux.length() + 1;
     char payload[len];
     aux.toCharArray(payload, len);
     n++;
-    
-    Serial.print(String(millis()) + "\tTx, payload: <\t" + String(payload));
-    time1 = micros();
-    
+
+    //Serial.print(String(millis()) + "\tTx, payload: <\t" + String(payload));
+    //time1 = micros();
+
     rf95.send((uint8_t *)payload, len);
     delay(10);
     rf95.waitPacketSent();
 
-    time2 = micros();
-    Serial.println("\t>, tx time:\t" + String(time2 - time1) + "\tus");
+    //time2 = micros();
+    //Serial.println("\t>, tx time:\t" + String(time2 - time1) + "\tus");
 
-    myserial.print("Sleep\r");
+    Serial.print("Sleep\r");
     rf95.sleep();
 
-    delay(1200000);
+    delay(5000);
+    // delay(1200000);
 
-    myserial.print("R\r");
+    Serial.print("R\r");
+    sensorstring = "";
+    sensor_string_complete = false;
   }
 }
 
