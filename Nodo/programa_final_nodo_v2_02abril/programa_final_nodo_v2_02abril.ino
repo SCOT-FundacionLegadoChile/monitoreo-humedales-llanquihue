@@ -5,9 +5,10 @@
 // String node_id = "los_helechos_1";
 // String node_id = "el_loto_plaza";
 // String node_id = "el_loto_werner";
-String node_id = "el_loto_isla";
+// String node_id = "el_loto_isla";
 // String node_id = "baquedano_pasarela";
 // String node_id = "sarao_1";
+String node_id = "prueba_lab";
 //////////////////////////////////////////
 //
 //// Tº H 
@@ -39,8 +40,8 @@ RH_RF95 rf95(RFM95_CS, RFM95_INT);
 
 /* SoftwareSerial */
 #include <SoftwareSerial.h>
-#define rx 4
-#define tx 3
+#define rx 7
+#define tx 6
 SoftwareSerial SSerial(rx, tx);
 
 #include <Vcc.h>
@@ -156,7 +157,8 @@ void loop() {
   SSerial.print("Sleep\r");  // *SL
   rf95.sleep();
 
-  delay(1200000);
+  //delay(1200000);
+  delay(5000);
   
   SSerial.print(".\r"); delay(50); // *WA
   SSerial.print("Status\r");

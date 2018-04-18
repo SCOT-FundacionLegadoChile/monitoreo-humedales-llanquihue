@@ -4576,7 +4576,7 @@ design rules under a new name.</description>
 <wire x1="4" y1="48" x2="2" y2="46" width="1.7" layer="16"/>
 <wire x1="2" y1="46" x2="2" y2="20.68" width="1.7" layer="16"/>
 <wire x1="2" y1="20.68" x2="5.34" y2="17.34" width="1.7" layer="16"/>
-<wire x1="5.34" y1="17.34" x2="5.39" y2="17.29" width="1.7" layer="16"/>
+<wire x1="5.34" y1="17.34" x2="5.39" y2="17.29" width="0.1524" layer="16"/>
 <wire x1="27" y1="48" x2="4" y2="48" width="1.7" layer="16"/>
 <wire x1="36.09" y1="37.8" x2="37.8" y2="37.8" width="1.7" layer="16"/>
 <wire x1="37.8" y1="37.8" x2="40.6" y2="40.6" width="1.7" layer="16"/>
@@ -4585,7 +4585,7 @@ design rules under a new name.</description>
 <wire x1="71.63" y1="18.99" x2="72" y2="19.36" width="0.508" layer="16"/>
 <wire x1="72" y1="29" x2="73" y2="30" width="1.7" layer="16"/>
 <wire x1="73" y1="30" x2="73" y2="43" width="1.7" layer="16"/>
-<wire x1="73" y1="43" x2="68" y2="48" width="1.7" layer="16"/>
+<wire x1="73" y1="43" x2="68" y2="48" width="1.5" layer="16"/>
 <wire x1="72" y1="19.36" x2="72" y2="29" width="1.7" layer="16"/>
 <wire x1="71.63" y1="18.99" x2="74.62" y2="16" width="1.7" layer="16"/>
 <wire x1="99.5185" y1="31.4185" x2="105.99" y2="31.4185" width="1.7" layer="16"/>
