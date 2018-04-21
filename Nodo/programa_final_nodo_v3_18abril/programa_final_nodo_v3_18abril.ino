@@ -67,12 +67,9 @@ RH_RF95 rf95(RFM95_CS, RFM95_INT);
 
 /* SoftwareSerial */
 #include <SoftwareSerial.h>
-#define rx 7
-#define tx 6
+#define rx 7 //4
+#define tx 6 //3
 SoftwareSerial SSerial(rx, tx);
-
-//#include <Vcc.h>
-//Vcc vcc(1.0);
 
 /* Variables */
 float hum;
@@ -130,9 +127,9 @@ void setup() {
     while(1);
   }
 
-  delay(3000);
+  delay(5000);
   SSerial.print("Status\r");
-  delay(1000);
+  delay(3000);
 }
 
 boolean isNumeric(String str) {
@@ -168,7 +165,6 @@ void loop() {
   
   hum = dht.readHumidity();
   temp = dht.readTemperature();
-  //vin = vcc.Read_Volts();
 
   delay(1000); // 800 + 200 ms
 
@@ -187,7 +183,6 @@ void loop() {
         String(hum)   + tab + 
         String(temp)  + tab + 
         sensorvalue   + tab + 
-        String(vin)   + tab + 
         message;
 
   uint8_t len = aux.length() + 1;
@@ -202,12 +197,9 @@ void loop() {
   SSerial.print("Sleep\r");  // *SL
   rf95.sleep();
 
-  //delay(1200000);
   delay(2000);
 
-  for (i=0; i<148; i++) {
-    SMCR |= (1 << 2); //power down mode
-    SMCR |= 1;//enable sleep
+  for (i=0; i<2; i++) { //148 ~= 20 min
     __asm__ __volatile__("sleep");
   }
   

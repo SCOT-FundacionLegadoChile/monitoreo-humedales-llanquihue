@@ -8,7 +8,7 @@
 
 
 #include <SoftwareSerial.h>                           //we have to include the SoftwareSerial library, or else we can't use it
-#define rx 7                                         //define what pin rx is going to be
+#define rx 7                                          //define what pin rx is going to be
 #define tx 6                                          //define what pin tx is going to be
 
 SoftwareSerial myserial(rx, tx);                      //define how the soft serial port is going to work
