@@ -192,17 +192,17 @@ def verbose(bot, update):
     global TELEGRAM_VERBOSE
     if TELEGRAM_VERBOSE:
         TELEGRAM_VERBOSE = False
-        update.message.reply_text('Silence everything about LoRa communication')
+        update.message.reply_text('Shh! Silence everything about LoRa communication')
     else:
         TELEGRAM_VERBOSE = True
-        update.message.reply_text('Printing everything about LoRa communication')
+        update.message.reply_text('Aaa! Printing everything about LoRa communication')
 
 def newTest(bot, update):
     logger.info('telegram: /newTest')
     os.system('sudo rm /home/pi/data_gw.txt')
     #os.system("echo 'Date\tTime\tuC Clock [ms]\tPacket Number\tPayload\tRSSI [dBm]\tLight [rel]\tHumidity [%]\tTemperature [C]' > /home/pi/data_gw.txt")
     os.system("echo 'Datos almacenados localmente:' > /home/pi/data_gw.txt")
-    update.message.reply_text("Ready, 'data_gw.txt' file is clean")
+    update.message.reply_text("Rea dy, 'data_gw.txt' file is clean")
     logger.info("Ready, 'data_gw.txt' file is clean")
 
 def getDataFile(bot, update):
