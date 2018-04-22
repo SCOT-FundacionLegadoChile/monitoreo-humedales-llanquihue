@@ -200,7 +200,8 @@ def verbose(bot, update):
 def newTest(bot, update):
     logger.info('telegram: /newTest')
     os.system('sudo rm /home/pi/data_gw.txt')
-    os.system("echo 'Date\tTime\tuC Clock [ms]\tPacket Number\tPayload\tRSSI [dBm]\tLight [rel]\tHumidity [%]\tTemperature [C]' > /home/pi/data_gw.txt")
+    #os.system("echo 'Date\tTime\tuC Clock [ms]\tPacket Number\tPayload\tRSSI [dBm]\tLight [rel]\tHumidity [%]\tTemperature [C]' > /home/pi/data_gw.txt")
+    os.system("echo 'Datos almacenados localmente:' > /home/pi/data_gw.txt")
     update.message.reply_text("Ready, 'data_gw.txt' file is clean")
     logger.info("Ready, 'data_gw.txt' file is clean")
 
