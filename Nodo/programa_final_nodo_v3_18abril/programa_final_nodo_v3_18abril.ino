@@ -11,7 +11,7 @@
 // String node_id = "el_loto_isla";
 // String node_id = "baquedano_pasarela";
 // String node_id = "sarao_1";
-String node_id = "prueba_lab";
+String node_id = "prueba_lab1";
 //
 //////////////////////////////////////////
 //

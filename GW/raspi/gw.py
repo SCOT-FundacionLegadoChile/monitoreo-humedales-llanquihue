@@ -413,7 +413,8 @@ def main():
                     ## 2. Save in local file
                     clean_response = clean_response_list(lora_msg_list)
                     with open('/home/pi/data_gw.txt', 'a') as file:
-                        file.write(clean_response)
+                        #file.write(clean_response)
+                        file.write(lora_msg)
                         logger.info('writing packet in data file')
 
                     ## 3. Upload data to spreadsheet
@@ -439,7 +440,7 @@ def main():
 
                     ## 4. telegram
                     if TELEGRAM_VERBOSE:
-                        bot.send_message(chat_id=idMati, text=telegram_respose(lora_msg_list))
+                        bot.send_message(chat_id=idMati, text=telegram_respose(lora_msg))
             else:
                 pass
     except Exception as e:
