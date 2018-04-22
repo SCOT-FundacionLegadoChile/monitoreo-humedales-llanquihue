@@ -440,7 +440,8 @@ def main():
 
                     ## 4. telegram
                     if TELEGRAM_VERBOSE:
-                        bot.send_message(chat_id=idMati, text=telegram_respose(lora_msg))
+                        #bot.send_message(chat_id=idMati, text=telegram_respose(lora_msg_list))
+                        bot.send_message(chat_id=idMati, text=lora_msg)
             else:
                 pass
     except Exception as e:

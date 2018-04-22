@@ -121,7 +121,7 @@ void setup() {
   if (error == "ok" && !rf95.init())                        error = "LoRa radio initialization failed";
   if (error == "ok" && !rf95.setFrequency(RF95_FREQ))       error = "Frequency configuration failed";
   if (error == "ok" && !rf95.setModemConfig(RH_RF95::mod2)) error = "LoRa mod configuration error";
-  rf95.setTxPower(14);
+  rf95.setTxPower(23);
 
   if (error != "ok") {
     while(1);
