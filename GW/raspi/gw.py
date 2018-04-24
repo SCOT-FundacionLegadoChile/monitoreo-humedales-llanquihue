@@ -192,10 +192,10 @@ def verbose(bot, update):
     global TELEGRAM_VERBOSE
     if TELEGRAM_VERBOSE:
         TELEGRAM_VERBOSE = False
-        update.message.reply_text('¡Cashate nene! Silence everything about LoRa communication')
+        update.message.reply_text('Cashate nene! Silence everything about LoRa communication')
     else:
         TELEGRAM_VERBOSE = True
-        update.message.reply_text('¡Aaaaaaaaaaaa! Printing everything about LoRa communication')
+        update.message.reply_text('Aaaaaaaaaaaa! Printing everything about LoRa communication')
 
 def newTest(bot, update):
     logger.info('telegram: /newTest')
