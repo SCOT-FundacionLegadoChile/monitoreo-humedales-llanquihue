@@ -71,11 +71,11 @@ void setup() {
   // Configuring Tx power
   //   rf95.setTxPower(10)       -> use PA_BOOST transmitter pin. +5 to +23 (for modules that use PA_BOOST)            <- INAIR9B.
   //   rf95.setTxPower(10, true) -> use PA_RFO   transmitter pin. -1 to +14 (for modules that use RFO transmitter pin) <- INAIR9.
-  rf95.setTxPower(10,true);
+  rf95.setTxPower(10);
   Serial.println("inAir Tx power: ");
 
   // Configuring LoRa <B,SF,CR>
-  if (!rf95.setModemConfig(RH_RF95::mod10)) {
+  if (!rf95.setModemConfig(RH_RF95::mod2)) {
     Serial.println("error: inAir9 LoRa params configuration error");
     while(1);
   }

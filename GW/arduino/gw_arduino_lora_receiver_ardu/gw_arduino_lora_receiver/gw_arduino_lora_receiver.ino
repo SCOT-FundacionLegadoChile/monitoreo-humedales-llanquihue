@@ -307,9 +307,9 @@ void loop() {
         packetNumber = packetNumber * 10 + (c-48);
       }
 
-      if (packetNumber != lastPacketNumber + 1) {
-        printPreviousPacketsNotReceived(packetNumber);
-      }
+      //if (packetNumber != lastPacketNumber + 1) {
+      //  printPreviousPacketsNotReceived(packetNumber);
+      //}
       lastPacketNumber = packetNumber;
       packetNumber = 0;
       

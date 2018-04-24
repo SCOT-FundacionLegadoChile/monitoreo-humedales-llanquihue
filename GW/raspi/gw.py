@@ -199,10 +199,11 @@ def verbose(bot, update):
 
 def newTest(bot, update):
     logger.info('telegram: /newTest')
+    #/home/pi/monitoreo-humedales-llanquihue/GW/raspi/gw.py
     os.system('sudo rm /home/pi/data_gw.txt')
     #os.system("echo 'Date\tTime\tuC Clock [ms]\tPacket Number\tPayload\tRSSI [dBm]\tLight [rel]\tHumidity [%]\tTemperature [C]' > /home/pi/data_gw.txt")
     os.system("echo 'Datos almacenados localmente:' > /home/pi/data_gw.txt")
-    update.message.reply_text("Rea dy, 'data_gw.txt' file is clean")
+    update.message.reply_text("Rea-dy, 'data_gw.txt' file is clean")
     logger.info("Ready, 'data_gw.txt' file is clean")
 
 def getDataFile(bot, update):
@@ -223,11 +224,13 @@ def uploadGSheets(bot, update):
 def updateFirmware(bot, update):
     # wget https://raw.githubusercontent.com/SCOT-FundacionLegadoChile/monitoreo-humedales-llanquihue/master/GW/raspi/gw.py
     logger.info('telegram: /updateFirmware')
-    os.system('sudo rm gw.py')
-    os.system('wget https://raw.githubusercontent.com/SCOT-FundacionLegadoChile/monitoreo-humedales-llanquihue/master/GW/raspi/gw.py')
+    #os.system('sudo rm gw.py')
+    #os.system('wget https://raw.githubusercontent.com/SCOT-FundacionLegadoChile/monitoreo-humedales-llanquihue/master/GW/raspi/gw.py')
+    os.system('cd /home/pi/monitoreo-humedales-llanquihue/')
+    os.system('git pull')
     update.message.reply_text("Ready, 'gw.py' updated")
     update.message.reply_text('/reboot for changes to take effect')
-    logger.info("Ready, 'data_gw.txt' file is clean")
+    logger.info("Ready, 'gw.py' updated")
 
 
 def echo(bot, update):

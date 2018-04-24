@@ -11,7 +11,7 @@
 // String node_id = "el_loto_isla";
 // String node_id = "baquedano_pasarela";
 // String node_id = "sarao_1";
-String node_id = "prueba_lab1";
+String node_id = "prueba_lab";
 //
 //////////////////////////////////////////
 //
@@ -180,9 +180,9 @@ void loop() {
   
   aux = String(n)     + tab + 
         node_id       + tab + 
-        String(hum)   + tab + 
         String(temp)  + tab + 
         sensorvalue   + tab + 
+        String(hum)   + tab + 
         message;
 
   uint8_t len = aux.length() + 1;
