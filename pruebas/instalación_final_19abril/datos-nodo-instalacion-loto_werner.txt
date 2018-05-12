@@ -1,0 +1,38 @@
+inAir9 ready!
+inAir9 freq: 915.00
+inAir9 LoRa mod10
+inAir9 listening ...
+
+5191 Rx, payload:  [1	el_loto_werner	13.90	no_value	58.60	-15.368  ], rssi: -24
+74637 Rx, payload:  [0	el_loto_werner	13.90	no_value	58.50	-11.060  ], rssi: -24
+90777 Rx, payload:  [1	el_loto_werner	13.90	no_value	58.00	-10.639  ], rssi: -24
+106917 Rx, payload:  [2	el_loto_werner	13.90	no_value	57.90	-10.162  ], rssi: -24
+123058 Rx, payload:  [3	el_loto_werner	13.90	no_value	57.90	-9.479  ], rssi: -24
+139196 Rx, payload:  [4	el_loto_werner	13.90	no_value	57.70	-9.161  ], rssi: -25
+155340 Rx, payload:  [5	el_loto_werner	13.90	no_value	57.70	-8.583  ], rssi: -25
+182878 Rx, payload:  [0	el_loto_werner	13.80	no_value	57.00	-1018.151  ], rssi: -24
+225044 Rx, payload:  [0	el_loto_werner	13.80	no_value	56.80	-1018.151  ], rssi: -24
+241180 Rx, payload:  [1	el_loto_werner	13.80	no_value	57.30	-10.431  ], rssi: -26
+352985 Rx, payload:  [0	el_loto_werner	13.70	no_value	56.50	-5.467  ], rssi: -26
+369123 Rx, payload:  [1	el_loto_werner	13.60	no_value	56.30	-3.828  ], rssi: -27
+385261 Rx, payload:  [2	el_loto_werner	13.60	no_value	56.30	-1.820  ], rssi: -25
+401481 Rx, payload:  [3	el_loto_werner	13.60	0.574	56.80	*W⸮QQUM⸮P,3.31  ], rssi: -24
+417617 Rx, payload:  [4	el_loto_werner	13.50	2.702	56.20	*W⸮QQUM⸮P,3.31  ], rssi: -25
+433752 Rx, payload:  [5	el_loto_werner	13.50	3.959	56.70	*W⸮QQUM⸮P,3.31  ], rssi: -25
+449888 Rx, payload:  [6	el_loto_werner	13.50	4.953	56.70	*W⸮QQUM⸮P,3.31  ], rssi: -25
+466024 Rx, payload:  [7	el_loto_werner	13.50	5.768	56.70	*W⸮QQUM⸮P,3.31  ], rssi: -24
+482158 Rx, payload:  [8	el_loto_werner	13.50	6.221	56.70	*W⸮QQUM⸮P,3.31  ], rssi: -24
+498292 Rx, payload:  [9	el_loto_werner	13.40	6.714	56.60	*W⸮QQUM⸮P,3.31  ], rssi: -24
+514426 Rx, payload:  [10	el_loto_werner	13.40	7.379	56.10	*W⸮QQUM⸮P,3.31  ], rssi: -24
+530558 Rx, payload:  [11	el_loto_werner	13.40	7.794	56.10	*W⸮QQUM⸮P,3.30  ], rssi: -25
+546693 Rx, payload:  [12	el_loto_werner	13.30	8.206	56.00	*W⸮QQUM⸮P,3.30  ], rssi: -24
+562827 Rx, payload:  [13	el_loto_werner	13.30	8.370	56.00	*W⸮QQUM⸮P,3.30  ], rssi: -25
+578959 Rx, payload:  [14	el_loto_werner	13.30	8.526	56.00	*W⸮QQUM⸮P,3.31  ], rssi: -24
+595091 Rx, payload:  [15	el_loto_werner	13.30	8.873	56.00	*W⸮QQUM⸮P,3.30  ], rssi: -25
+611223 Rx, payload:  [16	el_loto_werner	13.30	9.271	56.00	*W⸮QQUM⸮P,3.31  ], rssi: -24
+627355 Rx, payload:  [17	el_loto_werner	13.30	9.370	56.50	*W⸮QQUM⸮P,3.31  ], rssi: -24
+643487 Rx, payload:  [18	el_loto_werner	13.20	9.317	56.40	*W⸮QQUM⸮P,3.31  ], rssi: -24
+659619 Rx, payload:  [19	el_loto_werner	13.20	9.568	56.40	*W⸮QQUM⸮P,3.31  ], rssi: -24
+675751 Rx, payload:  [20	el_loto_werner	13.20	9.667	56.40	*W⸮QQUM⸮P,3.31  ], rssi: -24
+705046 Rx, payload:  [0nerrorner13.10nerno_valuener56.40nerer9.707  ], rssi: -24
+756017 Rx, payload:  [0	el_loto_werner	13.10	no_value	55.90	-1018.151  ], rssi: -24

@@ -1,0 +1,3 @@
+node_id date time timestamp pack_num rssi sensor_value temperature humidity sensor_msg sensor_battery
+prueba	2018-05-10	20:32:47.522076	1525984367.52	12	-64	2	11	72	no_msg	-0.0
+prueba	2018-05-10	20:38:00.688962	1525984680.69	18	-67	2	20	69	no_msg	-0.0

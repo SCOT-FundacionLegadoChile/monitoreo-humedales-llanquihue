@@ -1,0 +1,21 @@
+inAir9 ready!
+inAir9 freq: 915.00
+inAir9 LoRa mod10
+inAir9 listening ...
+
+53266 Rx, payload:  [0	baquedano_pasarela	24.60	6.992	42.30	?STATUS,P,3.34  ], rssi: -26
+72558 Rx, payload:  [1	baquedano_pasarela	23.40	6.984	43.80	?STATUS,P,3.35  ], rssi: -27
+90808 Rx, payload:  [2	baquedano_pasarela	23.20	6.984	44.00	?STATUS,P,3.35  ], rssi: -30
+128837 Rx, payload:  [0	baquedano_pasarela	23.00	6.991	44.50	?STATUS,P,3.34  ], rssi: -25
+291813 Rx, payload:  [0	baquedano_pasarela	22.70	no_value	45.50	no_msg  ], rssi: -28
+311087 Rx, payload:  [1	baquedano_pasarela	22.10	no_value	46.90	no_msg  ], rssi: -27
+331339 Rx, payload:  [0	baquedano_pasarela	21.90	no_value	46.60	no_msg  ], rssi: -26
+350609 Rx, payload:  [1	baquedano_pasarela	21.90	no_value	47.30	no_msg  ], rssi: -26
+405321 Rx, payload:  [4	baquedano_pasarela	21.60	no_value	47.90	no_msg  ], rssi: -25
+471738 Rx, payload:  [0	baquedano_pasarela	21.40	no_value	48.10	no_msg  ], rssi: -26
+491005 Rx, payload:  [1	baquedano_pasarela	21.40	no_value	48.70	no_msg  ], rssi: -26
+509241 Rx, payload:  [2	baquedano_pasarela	21.30	no_value	48.90	no_msg  ], rssi: -25
+527472 Rx, payload:  [3	baquedano_pasarela	21.30	no_value	49.00	no_msg  ], rssi: -25
+545705 Rx, payload:  [4	baquedano_pasarela	21.20	no_value	49.10	no_msg  ], rssi: -25
+664840 Rx, payload:  [0	baquedano_pasarela	21.10	7.934	48.70	?STATUS,P,3.35  ], rssi: -25
+684120 Rx, payload:  [1	baquedano_pasarela	20.80	7.935	49.30	*W⸮⸮ATUS,P,3.35  ], rssi: -24

@@ -1,0 +1,95 @@
+node_id date time timestamp pack_num rssi sensor_value temperature humidity sensor_msg sensor_battery
+baquedano_pasarela	2018-05-10	19:46:37.837906	1525981597.84	8	-63	1	23	71	no_msg	-0.0
+baquedano_pasarela	2018-05-10	19:47:44.930437	1525981664.93	14	-64	3	19	82	no_msg	-0.0
+baquedano_pasarela	2018-05-10	19:49:15.609909	1525981755.61	2	-63	3	24	99	no_msg	-0.0
+baquedano_pasarela	 	 	 	3	 	 	 	 	 
+baquedano_pasarela	 	 	 	4	 	 	 	 	 
+baquedano_pasarela	 	 	 	5	 	 	 	 	 
+baquedano_pasarela	 	 	 	6	 	 	 	 	 
+baquedano_pasarela	 	 	 	7	 	 	 	 	 
+baquedano_pasarela	2018-05-10	19:50:22.535661	1525981822.54	8	-63	0	10	50	no_msg	-0.0
+baquedano_pasarela	2018-05-10	19:51:07.195750	1525981867.2	2	-62	0	23	95	no_msg	-0.0
+baquedano_pasarela	2018-05-10	19:51:51.889760	1525981911.89	2	-63	1	20	62	no_msg	-0.0
+baquedano_pasarela	2018-05-10	19:52:25.663986	1525981945.66	2	-66	0	27	86	no_msg	-0.0
+baquedano_pasarela	2018-05-10	19:53:32.838250	1525982012.84	2	-62	0	19	69	no_msg	-0.0
+baquedano_pasarela	 	 	 	3	 	 	 	 	 
+baquedano_pasarela	 	 	 	4	 	 	 	 	 
+baquedano_pasarela	 	 	 	5	 	 	 	 	 
+baquedano_pasarela	 	 	 	6	 	 	 	 	 
+baquedano_pasarela	 	 	 	7	 	 	 	 	 
+baquedano_pasarela	2018-05-10	19:54:39.763849	1525982079.76	8	-64	0	16	97	no_msg	-0.0
+baquedano_pasarela	 	 	 	9	 	 	 	 	 
+baquedano_pasarela	 	 	 	10	 	 	 	 	 
+baquedano_pasarela	 	 	 	11	 	 	 	 	 
+baquedano_pasarela	 	 	 	12	 	 	 	 	 
+baquedano_pasarela	 	 	 	13	 	 	 	 	 
+baquedano_pasarela	2018-05-10	19:55:46.856047	1525982146.86	14	-63	1	21	74	no_msg	-0.0
+baquedano_pasarela	 	 	 	15	 	 	 	 	 
+baquedano_pasarela	 	 	 	16	 	 	 	 	 
+baquedano_pasarela	 	 	 	17	 	 	 	 	 
+baquedano_pasarela	 	 	 	18	 	 	 	 	 
+baquedano_pasarela	 	 	 	19	 	 	 	 	 
+baquedano_pasarela	2018-05-10	19:56:53.946069	1525982213.95	20	-64	4	11	88	no_msg	-0.0
+baquedano_pasarela	 	 	 	21	 	 	 	 	 
+baquedano_pasarela	 	 	 	22	 	 	 	 	 
+baquedano_pasarela	 	 	 	23	 	 	 	 	 
+baquedano_pasarela	 	 	 	24	 	 	 	 	 
+baquedano_pasarela	 	 	 	25	 	 	 	 	 
+baquedano_pasarela	2018-05-10	19:58:01.036096	1525982281.04	26	-63	1	15	97	no_msg	-0.0
+baquedano_pasarela	 	 	 	27	 	 	 	 	 
+baquedano_pasarela	 	 	 	28	 	 	 	 	 
+baquedano_pasarela	 	 	 	29	 	 	 	 	 
+baquedano_pasarela	 	 	 	30	 	 	 	 	 
+baquedano_pasarela	 	 	 	31	 	 	 	 	 
+baquedano_pasarela	2018-05-10	19:59:08.126146	1525982348.13	32	-64	4	17	83	no_msg	-0.0
+baquedano_pasarela	 	 	 	33	 	 	 	 	 
+baquedano_pasarela	 	 	 	34	 	 	 	 	 
+baquedano_pasarela	 	 	 	35	 	 	 	 	 
+baquedano_pasarela	 	 	 	36	 	 	 	 	 
+baquedano_pasarela	 	 	 	37	 	 	 	 	 
+baquedano_pasarela	2018-05-10	20:00:15.216123	1525982415.22	38	-64	4	21	77	no_msg	-0.0
+baquedano_pasarela	 	 	 	39	 	 	 	 	 
+baquedano_pasarela	 	 	 	40	 	 	 	 	 
+baquedano_pasarela	 	 	 	41	 	 	 	 	 
+baquedano_pasarela	 	 	 	42	 	 	 	 	 
+baquedano_pasarela	 	 	 	43	 	 	 	 	 
+baquedano_pasarela	2018-05-10	20:01:22.306115	1525982482.31	44	-64	0	12	72	no_msg	-0.0
+baquedano_pasarela	 	 	 	45	 	 	 	 	 
+baquedano_pasarela	 	 	 	46	 	 	 	 	 
+baquedano_pasarela	 	 	 	47	 	 	 	 	 
+baquedano_pasarela	 	 	 	48	 	 	 	 	 
+baquedano_pasarela	 	 	 	49	 	 	 	 	 
+baquedano_pasarela	2018-05-10	20:02:29.396033	1525982549.4	50	-64	4	24	98	no_msg	-0.0
+baquedano_pasarela	 	 	 	51	 	 	 	 	 
+baquedano_pasarela	 	 	 	52	 	 	 	 	 
+baquedano_pasarela	 	 	 	53	 	 	 	 	 
+baquedano_pasarela	 	 	 	54	 	 	 	 	 
+baquedano_pasarela	 	 	 	55	 	 	 	 	 
+baquedano_pasarela	2018-05-10	20:03:36.485931	1525982616.49	56	-64	3	10	57	no_msg	-0.0
+baquedano_pasarela	 	 	 	57	 	 	 	 	 
+baquedano_pasarela	 	 	 	58	 	 	 	 	 
+baquedano_pasarela	 	 	 	59	 	 	 	 	 
+baquedano_pasarela	 	 	 	60	 	 	 	 	 
+baquedano_pasarela	 	 	 	61	 	 	 	 	 
+baquedano_pasarela	2018-05-10	20:04:43.575820	1525982683.58	62	-63	4	10	70	no_msg	-0.0
+baquedano_pasarela	 	 	 	63	 	 	 	 	 
+baquedano_pasarela	 	 	 	64	 	 	 	 	 
+baquedano_pasarela	 	 	 	65	 	 	 	 	 
+baquedano_pasarela	 	 	 	66	 	 	 	 	 
+baquedano_pasarela	 	 	 	67	 	 	 	 	 
+baquedano_pasarela	2018-05-10	20:05:50.665734	1525982750.67	68	-64	0	27	93	no_msg	-0.0
+baquedano_pasarela	 	 	 	69	 	 	 	 	 
+baquedano_pasarela	 	 	 	70	 	 	 	 	 
+baquedano_pasarela	 	 	 	71	 	 	 	 	 
+baquedano_pasarela	 	 	 	72	 	 	 	 	 
+baquedano_pasarela	 	 	 	73	 	 	 	 	 
+baquedano_pasarela	2018-05-10	20:06:57.755594	1525982817.76	74	-63	2	19	83	no_msg	-0.0
+baquedano_pasarela	 	 	 	75	 	 	 	 	 
+baquedano_pasarela	 	 	 	76	 	 	 	 	 
+baquedano_pasarela	 	 	 	77	 	 	 	 	 
+baquedano_pasarela	 	 	 	78	 	 	 	 	 
+baquedano_pasarela	 	 	 	79	 	 	 	 	 
+baquedano_pasarela	2018-05-10	20:08:04.845404	1525982884.85	80	-62	2	20	80	no_msg	-0.0
+baquedano_pasarela	2018-05-10	20:24:05.723756	1525983845.72	2	-63	1	21	89	no_msg	-0.0
+baquedano_pasarela	2018-05-10	20:29:18.727225	1525984158.73	8	-65	1	11	85	no_msg	-0.0
+baquedano_pasarela	2018-05-10	20:34:31.896573	1525984471.9	14	-66	1	18	73	no_msg	-0.0

@@ -11,7 +11,7 @@
 // String node_id = "el_loto_isla";
 // String node_id = "baquedano_pasarela";
 // String node_id = "sarao_1";
-String node_id = "prueba_lab";
+String node_id = "prueba";
 //
 //////////////////////////////////////////
 //
@@ -86,7 +86,7 @@ String tab = String("\t");
 uint8_t i;
 
 void setup() {
-  //Serial.begin(9600);
+  Serial.begin(9600);
   SSerial.begin(9600);
 
   sensorstring.reserve(30);
@@ -125,7 +125,10 @@ void setup() {
 
   if (error != "ok") {
     while(1);
+    Serial.print("fail");
   }
+  
+    Serial.print("wuju");
 
   delay(5000);
   SSerial.print("Status\r");
@@ -199,7 +202,7 @@ void loop() {
 
   delay(2000);
 
-  for (i=0; i<2; i++) { //148 ~= 20 min
+  for (i=0; i<1; i++) { //148 ~= 20 min
     __asm__ __volatile__("sleep");
   }
   

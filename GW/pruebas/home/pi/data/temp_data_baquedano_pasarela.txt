@@ -1,0 +1,2 @@
+node_id date time timestamp pack_num rssi sensor_value temperature humidity sensor_msg sensor_battery
+baquedano_pasarela	2018-05-10	20:34:31.896573	1525984471.9	14	-66	1	18	73	no_msg	-0.0
