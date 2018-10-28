@@ -68,5 +68,8 @@ class PaqueteLoRa:
 					for i in range(int(last_num)+1, actual_num):
 						file.write(voidPacket(self.node_id, i) + "\n")
 
+	def telegramMessage(self):
+		return "[" + self.node_id + " - #" + self.pack_num + " rssi=" + self.rssi + " value=" + self.sensor_value + "]"
+
 def voidPacket(pid, n):
 	return pid + tab + " " + tab + " " + tab + " " + tab + str(n) + tab + " " + tab + " " + tab + " " + tab + " " + tab + " "

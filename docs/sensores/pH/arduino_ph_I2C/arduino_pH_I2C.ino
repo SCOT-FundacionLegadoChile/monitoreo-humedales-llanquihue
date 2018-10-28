@@ -10,7 +10,8 @@
 
 
 #include <Wire.h>                //enable I2C.
-#define address 99               //default I2C ID number for EZO pH Circuit.
+//#define address 99               //default I2C ID number for EZO pH Circuit.
+#define address 102               //default I2C ID number for EZO Temp. Circuit.
 
 
 
@@ -37,7 +38,7 @@ void loop() {                   //the main loop.
     received_from_computer = Serial.readBytesUntil(13, computerdata, 20); //we read the data sent from the serial monitor(pc/mac/other) until we see a <CR>. We also count how many characters have been received.
     computerdata[received_from_computer] = 0;                             //stop the buffer from transmitting leftovers or garbage.
     computerdata[0] = tolower(computerdata[0]);                           //we make sure the first char in the string is lower case.
-    if (computerdata[0] == 'c' || computerdata[0] == 'r')time_ = 900;    //if a command has been sent to calibrate or take a reading we wait 1800ms so that the circuit has time to take the reading.
+    if (computerdata[0] == 'c' || computerdata[0] == 'r')time_ = 900;     //if a command has been sent to calibrate or take a reading we wait 1800ms so that the circuit has time to take the reading.
     else time_ = 300;                                                     //if any other command has been sent we wait only 300ms.
 
 

@@ -9,9 +9,9 @@
 // String node_id = "el_loto_plaza";
 // String node_id = "el_loto_werner";
 // String node_id = "el_loto_isla";
-// String node_id = "baquedano_pasarela";
+String node_id = "baquedano_pasarela";
 // String node_id = "sarao_1";
-String node_id = "prueba";
+// String node_id = "prueba";
 //
 //////////////////////////////////////////
 //
@@ -92,8 +92,8 @@ void setup() {
   sensorstring.reserve(30);
 
   //Disminuimos consumo setiando pines a un estado
-  pinMode(3, OUTPUT); pinMode(4, OUTPUT); pinMode(8, OUTPUT);
-  pinMode(14, OUTPUT); pinMode(15, OUTPUT); pinMode(16, OUTPUT);
+  //pinMode(3, OUTPUT); pinMode(4, OUTPUT); pinMode(8, OUTPUT);
+  //pinMode(14, OUTPUT); pinMode(15, OUTPUT); pinMode(16, OUTPUT);
   pinMode(17, OUTPUT); pinMode(18, OUTPUT); pinMode(19, OUTPUT);
 
   //SETUP WATCHDOG TIMER
@@ -102,7 +102,7 @@ void setup() {
   WDTCSR |= (1<<6);//enable interrupt mode
 
   //Disable ADC - don't forget to flip back after waking up if using ADC in your application ADCSRA |= (1 << 7);
-  ADCSRA &= ~(1 << 7);
+  //ADCSRA &= ~(1 << 7);
 
   //ENABLE SLEEP - this enables the sleep mode
   SMCR |= (1 << 2); //power down mode
@@ -197,12 +197,13 @@ void loop() {
   delay(10);
   rf95.waitPacketSent();
 
-  SSerial.print("Sleep\r");  // *SL
+  SSerial.print("Sleep\r");  // *SL 
   rf95.sleep();
 
   delay(2000);
 
-  for (i=0; i<1; i++) { //148 ~= 20 min
+  for (i=0; i<63; i++) { //148 ~= 20 min
+    delay(10000);
     __asm__ __volatile__("sleep");
   }
   

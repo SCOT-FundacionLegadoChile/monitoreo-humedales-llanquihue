@@ -25,6 +25,9 @@ import gw_config
 import numpy as np
 from oauth2client.service_account import ServiceAccountCredentials
 
+import string
+printable = set(string.printable)
+
 nodes_ids = gw_config.nodes_ids
 node_id2wks_name = gw_config.node_id2wks_name
 
@@ -44,10 +47,12 @@ def upload():
 				if nn == 1:
 					continue
 
+				line = filter(lambda x: x in printable, line)
 				line = line.split('\n')[0]
 
 				mlist = line.split("\t")
 				mlist = list(filter(None, mlist))
+
 				mlist.pop(0)
 				wks.append_row(mlist)
 

@@ -3,16 +3,18 @@
 import os
 import sys
 import time
-import creds
+import creds ## dev file
 import serial
-import gw_bot
-import gw_utils
-import gw_config
+import gw_bot ## dev file
+import gw_utils ## dev file
+import time
+import datetime
+import gw_config ## dev file
 import traceback
 import threading
-import uploadGSheets
+import uploadGSheets ## dev file
 from functools import wraps
-from paqueteLoRa import PaqueteLoRa
+from paqueteLoRa import PaqueteLoRa ## dev file
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 # Initialize serial port
@@ -24,17 +26,25 @@ time.sleep(1)
 # Check if all files and directories are created
 gw_utils.initFileStructure(gw_config.nodes_ids, gw_config.data_header)
 
-# Schedule data upload every 20 minutes
+# Schedule data upload every X minutes
 def uploadData ():
-	print "stackoverflow"
+	print "stackoverflow ", str(datetime.datetime.now().time())[:8]
 
-	uploadGSheets.upload()
+	try:
+		uploadGSheets.upload()
+	except Exception as e:
+		print 'Error uploading data to gsheets'
+		print 'Error: ', e
+
 	os.system("rm /home/pi/data/temp_**")
 	gw_utils.initFileStructure(gw_config.nodes_ids, gw_config.data_header)
 
-	threading.Timer(600, uploadData).start ()
+	threading.Timer(60, uploadData).start () # -> seconds
 uploadData ()
 
+# ##### ##### #     ##### ###   #####   #   ## ##
+#   #   ###   #     ###   #  ## #####  ###  #####
+#   #   ##### ##### ##### ##### # #   #   # #   #
 # Initialize telegram methods
 # TELEGRAM funcs
 global TELEGRAM_VERBOSE
@@ -46,7 +56,7 @@ idMati = creds.TELEGRAM_ADMIN_ID
 botKey = creds.TELEGRAM_BOT_GW_PRUEBA_KEY
 updater = Updater(botKey)
 LIST_OF_ADMINS = [int(idMati)]
-FIRMWARE_DOWNLOAD_URL = "https://www.dropbox.com/s/gg13mo2a517yxmc/prueba_telegram_bot.py"
+FIRMWARE_DOWNLOAD_URL = "not_configured"
 FIRMWARE_FILE_NAME = "Archivo.zip"
 
 def restricted(func):
@@ -63,7 +73,6 @@ def restricted(func):
 def start(bot, update):
     update.message.reply_text('Hi!')
 
-
 def help(bot, update):
     update.message.reply_text(help_message())
 
@@ -74,6 +83,7 @@ def stop(bot, update):
     print 'Telegram Bot stopped!! (by user ' + update.message.from_user.first_name + ')'
     sys.exit()
 
+@restricted
 def mod(bot, update):
     try:
         lora_mod = max(0, min(int(update.message.text[5:]), 10))
@@ -85,11 +95,13 @@ def mod(bot, update):
         print 'Error: Invalid /mod command'
         update.message.reply_text('Error: Invalid /mod command')
 
+@restricted
 def reboot(bot, update):
     update.message.reply_text('Restarting GW');
     #update.message.reply_text(str(datetime.datetime.now()))
     os.system('sudo reboot')
 
+@restricted
 def verbose(bot, update):
 	global TELEGRAM_VERBOSE
 	if TELEGRAM_VERBOSE:
@@ -99,36 +111,50 @@ def verbose(bot, update):
 		TELEGRAM_VERBOSE = True
 		update.message.reply_text('Aaaaaaa... Printing everything about LoRa communication')
 
+@restricted
+def deletetempdata(bot, update):
+    os.system("sudo rm /home/pi/data/temp_data**")
+    update.message.reply_text("Ready, temporal data deleted")
+
+@restricted
 def updateFirmware(bot, update):
 	os.system("wget {}".format(FIRMWARE_DOWNLOAD_URL))
-	if not os.path.isdir("/home/pi/{}".format(FIRMWARE_FILE_NAME)):
+	if not os.path.isfile("/home/pi/{}".format(FIRMWARE_FILE_NAME)):
 		update.message.reply_text("Error in download")
 		return
-	os.system("sudo rm /home/pi/{}.py /home/pi/{}.py /home/pi/{}.py /home/pi/{}.py /home/pi/{}.py /home/pi/{}.py /home/pi/{}.py /home/pi/{}.json".format("gw2", "gw_bot", "gw_utils", "gw_config", "paqueteLoRa", "uploadGSheets", "creds", "PruebaPaginaHumedales-7d3cc40aae82"))
+	#os.system("sudo rm /home/pi/{}.py /home/pi/{}.py /home/pi/{}.py /home/pi/{}.py /home/pi/{}.py /home/pi/{}.py /home/pi/{}.py /home/pi/{}.json".format("gw2", "gw_bot", "gw_utils", "gw_config", "paqueteLoRa", "uploadGSheets", "creds", "PruebaPaginaHumedales-7d3cc40aae82"))
+	os.system("sudo rm *.py *.json *.pyc")
 	os.system("unzip {}".format(FIRMWARE_FILE_NAME))
+	os.system("sudo rm {}".format(FIRMWARE_FILE_NAME))
+	os.system("sudo rm -rf __MACOSX")
 	update.message.reply_text("Ready, 'gw.py' updated")
 	update.message.reply_text('/reboot for changes to take effect')
 
+@restricted
 def firmwareDownloadURL(bot, update):
 	global FIRMWARE_DOWNLOAD_URL
-	url = update.message.text[21:]
+	url = update.message.text[21:] # takes off instruction chars and retrieve url
 	FIRMWARE_DOWNLOAD_URL = url
 	update.message.reply_text("URL configured ;)")
 
-def firmawareFileName(bot, update):
+@restricted
+def firmwareFileName(bot, update):
 	global FIRMWARE_FILE_NAME
 	name = update.message.text[18:]
 	FIRMWARE_FILE_NAME = name
 	update.message.reply_text("name configured ;)")
 
+@restricted
 def getFirmwareURL(bot, update):
 	global FIRMWARE_DOWNLOAD_URL
 	update.message.reply_text("URL: " + FIRMWARE_DOWNLOAD_URL)
 
+@restricted
 def getFirmwareName(bot, update):
 	global FIRMWARE_FILE_NAME
 	update.message.reply_text("Name: " + FIRMWARE_FILE_NAME)
 
+@restricted
 def addAdmin(bot, update):
 	global LIST_OF_ADMINS
 	try:
@@ -136,14 +162,17 @@ def addAdmin(bot, update):
 		LIST_OF_ADMINS.append(int(idd))
 		update.message.reply_text("User added as admin :)")
 	except Exception as e:
-		update.message.reply_text("Invalid user id :(")
+		update.message.reply_text("Error. Could be invalid user id :(")
 
 def echo(bot, update):
     update.message.reply_text("echo: " + update.message.text)
     print "\tbot - " + update.message.from_user.first_name + " (" + str(update.message.chat_id) + "): " + update.message.text
 
 def error(bot, update, error):
-    print 'Update "%s" caused error "%s", ' + update + ", " + error
+	# If anything fails in the GW Telegram Bot it's shown here!
+	print 'Update "%s" caused error "%s", ' + update + ", " + error
+	sys.exit()
+
 
 def send_message_admins(ttmsg):
 	global LIST_OF_ADMINS
@@ -163,19 +192,33 @@ dp.add_handler(CommandHandler("reboot", reboot))
 dp.add_handler(CommandHandler("verbose", verbose))
 #dp.add_handler(CommandHandler("newTest", newTest))
 #dp.add_handler(CommandHandler("getData", getDataFile))
-#dp.add_handler(CommandHandler("uploadGSheets", uploadGSheets))
-dp.add_handler(CommandHandler("updateFirmware", updateFirmware))
-dp.add_handler(CommandHandler("firmwareDownloadURL", firmwareDownloadURL))
-dp.add_handler(CommandHandler("firmawareFileName", firmawareFileName))
-dp.add_handler(CommandHandler("getFirmwareURL", getFirmwareURL))
-dp.add_handler(CommandHandler("getFirmwareName", getFirmwareName))
-dp.add_handler(CommandHandler("addAdmin", addAdmin))
+dp.add_handler(CommandHandler("deletetempdata", deletetempdata))
+dp.add_handler(CommandHandler("updatefirmware", updateFirmware))
+dp.add_handler(CommandHandler("firmwaredownloadurl", firmwareDownloadURL))
+dp.add_handler(CommandHandler("firmwarefilename", firmwareFileName))
+dp.add_handler(CommandHandler("getfirmwareurl", getFirmwareURL))
+dp.add_handler(CommandHandler("getfirmwarename", getFirmwareName))
+dp.add_handler(CommandHandler("addadmin", addAdmin))
 dp.add_handler(MessageHandler(Filters.all, echo))
 dp.add_error_handler(error)
 
 updater.start_polling()
 
-bot.send_message(chat_id=idMati, text="!Hola aloh")
+hello_msg = """
+################################################
+# Gateway Llanquihue Telegram Bot
+# {} {}
+################################################""".format(str(datetime.datetime.now().date()), str(datetime.datetime.now().time())[:8])
+
+bot.send_message(chat_id=idMati, text=hello_msg)
+
+# ##### ##### #     ##### ###   #####   #   ## ##
+#   #   ###   #     ###   #  ## #####  ###  #####
+#   #   ##### ##### ##### ##### #  #  #   # #   #
+
+# ###     #   ##### ##### #   #   #   #   #
+# #  ##  ###    #   ###   # # #  ###   ###
+# ##### #   #   #   #####  # #  #   #   #
 
 # Initialize Gateway routine
 try:
@@ -197,14 +240,20 @@ try:
 			lora_msg.printPacket()
 			lora_msg.storePacket()
 			if TELEGRAM_VERBOSE:
-				tmsg = "[" + lora_msg.node_id + " - #" + lora_msg.pack_num + " rssi=" + lora_msg.rssi + " value=" + lora_msg.sensor_value + "]"
+				tmsg = lora_msg.telegramMessage()
 				send_message_admins(tmsg)
 
 except Exception as e:
 	print 'Error: ' + e.message
 	print 'Traceback' + traceback.format_exc()
 
+
 ser.close()
+# script ends
+
+# ###     #   ##### ##### #   #   #   #   #
+# #  ##  ###    #   ###   # # #  ###   ###
+# ##### #   #   #   #####  # #  #   #   #
 
 #####################
 
@@ -216,12 +265,3 @@ def newTest(bot, update):
 
 def getDataFile(bot, update):
     bot.sendDocument(chat_id=idMati, document=open('/home/pi/data_gw.txt', 'rb'))
-
-def uploadGSheets(bot, update):
-    global UPLOAD_GSHEETS
-    if UPLOAD_GSHEETS:
-        UPLOAD_GSHEETS = False
-        update.message.reply_text('Packets just stored locally')
-    else:
-        UPLOAD_GSHEETS = True
-        update.message.reply_text('Packets will be stored in GSheets too')

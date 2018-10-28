@@ -1,0 +1,3 @@
+version de raspbian en esta carpeta era:
+
+2018-04-18-raspbian-stretch-lite
